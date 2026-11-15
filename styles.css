@@ -22,4 +22,5 @@ ol{padding-left:22px}dt{font-weight:700;margin-top:12px}dd{margin:4px 0 0;color:
 label{display:block;font-weight:600;margin:14px 0 6px}input,select{width:100%;padding:12px;font-size:1rem;border:1px solid var(--line);border-radius:8px;background:#fff}
 .result{font-size:1.6rem;font-weight:800;margin:6px 0}.small{font-size:.9rem;color:var(--mut)}
 table{border-collapse:collapse;width:100%;background:var(--card)}th,td{border:1px solid var(--line);padding:9px 10px;text-align:left;font-size:.97rem}th{background:#eef3f6}
+figure.shot{margin:22px 0}figure.shot img{display:block;max-width:100%;height:auto;border:1px solid var(--line);border-radius:10px;background:#fff}figure.shot figcaption{font-size:.9rem;color:var(--mut);margin-top:8px}
 footer{border-top:1px solid var(--line);margin-top:48px;padding:22px 0 40px;color:var(--mut);font-size:.9rem}
