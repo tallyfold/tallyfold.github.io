@@ -2,4 +2,4 @@ User-agent: *
 Disallow: /download/
 Disallow: /files/
 
-Sitemap: https://tallyfold.github.io/sitemap.xml
+Sitemap: https://wrensum.com/sitemap.xml
