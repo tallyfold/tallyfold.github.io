@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en-GB"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cash Runway Calculator: How Long Will Your Money Last? | Wrensum</title>
+<meta name="description" content="Free cash runway calculator for small businesses. Enter your bank balance, monthly income and monthly costs to see how many months your money will last.">
+<link rel="canonical" href="https://wrensum.com/calculators/cash-runway-calculator.html">
+<link rel="stylesheet" href="../styles.css"></head><body>
+<header class="site"><div class="wrap"><a class="brand" href="../index.html">Wrensum</a>
+<nav><a href="../index.html#tools">Tools</a><a href="../index.html#free">Free calculators</a></nav></div></header>
+<main class="wrap"><section class="hero"><h1>Cash runway calculator</h1>
+<p class="lead">How long will the money last? Enter what is in the bank, what comes in each month and what goes out. See how many months you have and roughly when the balance reaches zero.</p></section>
+<div class="panel">
+<label for="cash">Money in the bank today (£)</label><input id="cash" type="number" min="0" step="100" value="6000" inputmode="decimal">
+<label for="inc">Money coming in each month (£)</label><input id="inc" type="number" min="0" step="100" value="3200" inputmode="decimal">
+<label for="out">Money going out each month (£)</label><input id="out" type="number" min="0" step="100" value="4000" inputmode="decimal">
+<p class="small" style="margin-top:18px">Your runway</p><p class="result" id="res">7.5 months</p><p class="small" id="how"></p></div>
+<h2>How it is worked out</h2>
+<p>Take what goes out each month and subtract what comes in. That is your monthly shortfall. Divide the money in the bank by the shortfall and you have the number of months it will last. With £6,000 in the bank, £3,200 coming in and £4,000 going out, the shortfall is £800 a month, so the money lasts 6,000 divided by 800, which is 7.5 months.</p>
+<p>If more comes in than goes out, there is no shortfall and the balance grows instead.</p>
+<h2>What to put in</h2>
+<table><tr><th>Box</th><th>Include</th></tr>
+<tr><td>Money in the bank</td><td>Business current and savings accounts today. Leave out money you have already set aside for a tax bill.</td></tr>
+<tr><td>Coming in</td><td>What customers actually pay you in a typical month, not what you have invoiced.</td></tr>
+<tr><td>Going out</td><td>Rent, wages, stock, loan repayments, subscriptions, and what you take out for yourself.</td></tr></table>
+<h2>Where a single figure falls short</h2>
+<p>This calculator treats every month as the same. Real months are not: a quiet January, an annual insurance payment or a tax bill can take the balance below zero months before the average says it will. A month-by-month forecast shows that.</p>
+<p>The <a href="../tools/cash-flow-forecast.html">12-Month Cash Flow Forecast</a> lets you enter each month separately, shows the closing balance for every month and marks any month that ends below zero.</p>
+<p class="small">This calculator is a planning guide, not financial advice.</p>
+<script>
+function runway(cash,inc,out){var net=inc-out;if(cash<=0&&net<0)return{state:'empty',net:net};if(net>=0)return{state:'ok',net:net};var m=cash/(-net);return{state:'falling',net:net,months:m};}
+(function(){if(typeof document==='undefined')return;
+function n(id){var v=parseFloat(document.getElementById(id).value);return isFinite(v)&&v>0?v:0}
+function gbp(x){return '\u00a3'+Math.abs(x).toLocaleString('en-GB',{minimumFractionDigits:0,maximumFractionDigits:2})}
+function go(){var r=runway(n('cash'),n('inc'),n('out')),res=document.getElementById('res'),how=document.getElementById('how');
+if(r.state==='ok'){res.textContent=r.net>0?'Not running down':'Holding level';how.textContent=r.net>0?'You have '+gbp(r.net)+' more coming in than going out each month, so the balance is growing.':'The same amount comes in as goes out, so the balance stays where it is.';return;}
+if(r.state==='empty'){res.textContent='No runway';how.textContent='There is nothing in the bank and '+gbp(r.net)+' more going out than coming in each month.';return;}
+var m=r.months;res.textContent=(m>=120?'More than 10 years':(Math.round(m*10)/10).toLocaleString('en-GB')+(Math.round(m*10)/10===1?' month':' months'));
+var d=new Date();d.setDate(d.getDate()+Math.round(m*30.4375));
+how.textContent='Shortfall of '+gbp(r.net)+' a month. At this rate the balance reaches zero around '+d.toLocaleDateString('en-GB',{month:'long',year:'numeric'})+'.';}
+['cash','inc','out'].forEach(function(i){document.getElementById(i).addEventListener('input',go)});go();})();
+if(typeof module!=='undefined')module.exports={runway:runway};
+</script></main>
+<footer><div class="wrap"><p>Wrensum. Spreadsheet tools for UK sole traders and small firms.</p>
+<p>Wrensum is a trading name of Adam Turner, sole trader, 138 Eden Vale Road, Westbury, Wiltshire, BA13 3QF. hello@wrensum.com</p>
+<p><a href="../terms.html">Refunds and terms</a></p>
+<p>These tools are built with AI and each one is tested with worked figures before release. They are planning and record-keeping aids, not accounting, legal or tax advice.</p></div></footer>
+</body></html>

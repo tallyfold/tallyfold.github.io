@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en-GB"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Markup and Margin Calculator: What to Charge for a Job | Wrensum</title>
+<meta name="description" content="Free markup and margin calculator. Enter the cost of a job, your overhead and the profit margin you want to get the price to charge, with markup and margin explained.">
+<link rel="canonical" href="https://wrensum.com/calculators/markup-margin-calculator.html">
+<link rel="stylesheet" href="../styles.css"></head><body>
+<header class="site"><div class="wrap"><a class="brand" href="../index.html">Wrensum</a>
+<nav><a href="../index.html#tools">Tools</a><a href="../index.html#free">Free calculators</a></nav></div></header>
+<main class="wrap"><section class="hero"><h1>Markup and margin calculator</h1>
+<p class="lead">Work out what to charge for a job so that it makes the profit margin you want, and see the markup that goes with it.</p></section>
+<div class="panel">
+<label for="cost">Direct cost of the job: labour, materials and other costs (£)</label><input id="cost" type="number" min="0" step="10" value="1000" inputmode="decimal">
+<label for="oh">Overhead to add (% of direct cost)</label><input id="oh" type="number" min="0" step="1" value="15" inputmode="decimal">
+<label for="mg">Profit margin you want (% of the price)</label><input id="mg" type="number" min="0" max="99" step="1" value="30" inputmode="decimal">
+<p class="small" style="margin-top:18px">Price to charge, before VAT</p><p class="result" id="res">£1,642.86</p><p class="small" id="how"></p></div>
+<h2>Markup and margin are not the same</h2>
+<p>Both describe the same profit, measured against different things. Markup is profit as a percentage of your cost. Margin is profit as a percentage of your price. A job that costs £100 and sells for £150 has a 50% markup and a 33.3% margin.</p>
+<p>Mixing them up is a common way to undercharge. Adding 30% to your costs does not give a 30% margin. It gives 23.1%.</p>
+<table><tr><th>Margin you want</th><th>Markup to add to cost</th><th>Price for a job costing £1,000</th></tr>
+<tr><td>10%</td><td>11.1%</td><td>£1,111.11</td></tr><tr><td>20%</td><td>25%</td><td>£1,250.00</td></tr><tr><td>25%</td><td>33.3%</td><td>£1,333.33</td></tr>
+<tr><td>30%</td><td>42.9%</td><td>£1,428.57</td></tr><tr><td>40%</td><td>66.7%</td><td>£1,666.67</td></tr><tr><td>50%</td><td>100%</td><td>£2,000.00</td></tr></table>
+<h2>How it is worked out</h2>
+<ol><li>Total cost is direct cost plus overhead. £1,000 with 15% overhead is £1,150.</li>
+<li>Price is total cost divided by (1 minus the margin). £1,150 divided by 0.70 is £1,642.86.</li>
+<li>Profit is price minus total cost: £492.86, which is 30% of the price.</li></ol>
+<p>Overhead is the running cost you carry on every job, such as a van, insurance, tools and phone. Set it to 0 if your cost figure already includes it.</p>
+<h2>Cost a whole job line by line</h2>
+<p>The <a href="../tools/job-costing-calculator.html">Job Costing Calculator</a> uses the same sums on a full job: separate lines for labour, materials and other costs, the price you are actually charging compared with the suggested one, and a log of profit across every job you finish.</p>
+<p class="small">Prices here are before VAT. This calculator is a pricing guide, not accounting advice.</p>
+<script>
+function price(cost,ohPct,mgPct){var total=cost*(1+ohPct/100);if(mgPct>=100)return null;var p=total/(1-mgPct/100),profit=p-total;return{total:total,price:p,profit:profit,markup:total>0?profit/total*100:0};}
+(function(){if(typeof document==='undefined')return;
+function n(id){var v=parseFloat(document.getElementById(id).value);return isFinite(v)&&v>0?v:0}
+function gbp(x){return '\u00a3'+x.toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function go(){var r=price(n('cost'),n('oh'),n('mg')),res=document.getElementById('res'),how=document.getElementById('how');
+if(!r){res.textContent='Margin must be below 100%';how.textContent='A margin of 100% would mean the job cost nothing.';return;}
+res.textContent=gbp(r.price);
+how.textContent='Total cost '+gbp(r.total)+'. Profit '+gbp(r.profit)+'. Markup on total cost '+(Math.round(r.markup*10)/10).toLocaleString('en-GB')+'%.';}
+['cost','oh','mg'].forEach(function(i){document.getElementById(i).addEventListener('input',go)});go();})();
+if(typeof module!=='undefined')module.exports={price:price};
+</script></main>
+<footer><div class="wrap"><p>Wrensum. Spreadsheet tools for UK sole traders and small firms.</p>
+<p>Wrensum is a trading name of Adam Turner, sole trader, 138 Eden Vale Road, Westbury, Wiltshire, BA13 3QF. hello@wrensum.com</p>
+<p><a href="../terms.html">Refunds and terms</a></p>
+<p>These tools are built with AI and each one is tested with worked figures before release. They are planning and record-keeping aids, not accounting, legal or tax advice.</p></div></footer>
+</body></html>
