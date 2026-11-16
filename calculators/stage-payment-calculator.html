@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en-GB"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Stage Payment Calculator for Builders: Deposit, Stages and Final Payment | Wrensum</title>
+<meta name="description" content="Free stage payment calculator for builders and trades. Split a job price into a deposit, equal stage payments and a final payment, with VAT if you charge it. The amounts always add up to the price.">
+<link rel="canonical" href="https://wrensum.com/calculators/stage-payment-calculator.html">
+<link rel="stylesheet" href="../styles.css"></head><body>
+<header class="site"><div class="wrap"><a class="brand" href="../index.html">Wrensum</a>
+<nav><a href="../index.html#tools">Tools</a><a href="../index.html#free">Free calculators</a></nav></div></header>
+<main class="wrap"><section class="hero"><h1>Stage payment calculator</h1>
+<p class="lead">Split the price of a job into a deposit, stage payments and a final payment. Every amount is rounded to the penny and the total always matches the price.</p></section>
+<div class="panel">
+<label for="pr">Job price before VAT (£)</label><input id="pr" type="number" min="0" step="100" value="36500" inputmode="decimal">
+<label for="dp">Deposit on booking (% of the price)</label><input id="dp" type="number" min="0" max="100" step="1" value="10" inputmode="decimal">
+<label for="ns">Number of stage payments between the deposit and the final payment</label><input id="ns" type="number" min="0" max="12" step="1" value="4" inputmode="numeric">
+<label for="fp">Final payment on completion (% of the price)</label><input id="fp" type="number" min="0" max="100" step="1" value="10" inputmode="decimal">
+<label for="vr">VAT rate to add (%). Enter 0 if you are not VAT registered</label><input id="vr" type="number" min="0" max="100" step="0.5" value="0" inputmode="decimal">
+<p class="small" style="margin-top:18px">Each stage payment</p><p class="result" id="res"></p><p class="small" id="how"></p>
+<div id="tbl"></div></div>
+<h2>How it is worked out</h2>
+<ol><li>The deposit and the final payment are the percentages you enter. 10% of £36,500 is £3,650 each.</li>
+<li>What is left is shared equally between the stage payments. £29,200 over 4 stages is £7,300 a stage.</li>
+<li>Each amount is rounded to the penny. Any odd pennies go on the last payment, so the payments add up to the price exactly.</li></ol>
+<h2>Why split a job into stages</h2>
+<p>On a job that runs for weeks you pay for labour and materials long before the work is finished. Stage payments tied to points the customer can see, such as foundations complete or roof on, keep money coming in as you spend it. A final payment held until completion gives the customer something to hold back until the snagging is done.</p>
+<p>Agree the stages and amounts in writing before you start, and put them on the quote.</p>
+<h2>A note on VAT</h2>
+<p>The VAT box adds one rate to every stage. Some building work is charged at a different rate or under the reverse charge. This calculator does not decide that for you: check which applies to the job.</p>
+<h2>Run the whole job from one file</h2>
+<p>The <a href="../tools/builders-job-pack.html">Builders Job Pack</a> lets you name each stage and set its own percentage, prints the stages on the quote, and tracks what has been invoiced and paid. It also covers the estimate, variations and actual costs against the estimate.</p>
+<p class="small">This calculator is a planning guide, not legal, contract or tax advice.</p>
+<script>
+function stages(price,depPct,n,finPct,vatPct){n=Math.max(0,Math.floor(n||0));if(depPct+finPct>100)return{error:'over'};
+if(n===0&&depPct+finPct<100)return{error:'short',left:100-depPct-finPct};
+var p=Math.round(price*100),rows=[],used=0,dep=Math.round(p*depPct/100),rest=p-dep-Math.round(p*finPct/100),each=n?Math.floor(rest/n):0;
+if(depPct>0){rows.push({name:'Deposit on booking',net:dep});used+=dep;}
+for(var i=1;i<=n;i++){rows.push({name:'Stage '+i,net:each});used+=each;}
+var fin=p-used;if(finPct>0)rows.push({name:'Final payment on completion',net:fin});else if(rows.length)rows[rows.length-1].net+=fin;
+var tn=0,tv=0;rows.forEach(function(r){r.vat=Math.round(r.net*vatPct/100);r.gross=r.net+r.vat;tn+=r.net;tv+=r.vat;r.pct=p?r.net/p*100:0;});
+return{rows:rows.map(function(r){return{name:r.name,pct:r.pct,net:r.net/100,vat:r.vat/100,gross:r.gross/100}}),each:each/100,net:tn/100,vat:tv/100,gross:(tn+tv)/100};}
+(function(){if(typeof document==='undefined')return;
+function n(id){var v=parseFloat(document.getElementById(id).value);return isFinite(v)&&v>0?v:0}
+function gbp(x){return '\u00a3'+x.toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function go(){var v=n('vr'),r=stages(n('pr'),n('dp'),n('ns'),n('fp'),v),res=document.getElementById('res'),how=document.getElementById('how'),tbl=document.getElementById('tbl');
+if(r.error==='over'){res.textContent='Deposit and final payment come to more than 100%';how.textContent='Lower one of them.';tbl.innerHTML='';return;}
+if(r.error==='short'){res.textContent='Add at least one stage';how.textContent='The deposit and final payment leave '+r.left+'% of the price with no payment to carry it.';tbl.innerHTML='';return;}
+res.textContent=n('ns')>0?gbp(r.each)+(v>0?' plus VAT':''):'No stage payments';
+how.textContent=r.rows.length+' payments in all, totalling '+gbp(r.net)+(v>0?' plus '+gbp(r.vat)+' VAT, '+gbp(r.gross)+' to pay.':'.');
+var h='<div style="overflow-x:auto"><table style="min-width:'+(v>0?'520':'0')+'px"><tr><th>Payment</th><th>Share</th><th>Amount</th>'+(v>0?'<th>VAT</th><th>To pay</th>':'')+'</tr>';
+r.rows.forEach(function(x){h+='<tr><td>'+x.name+'</td><td>'+(Math.round(x.pct*10)/10)+'%</td><td>'+gbp(x.net)+'</td>'+(v>0?'<td>'+gbp(x.vat)+'</td><td>'+gbp(x.gross)+'</td>':'')+'</tr>';});
+h+='<tr><th>Total</th><th>100%</th><th>'+gbp(r.net)+'</th>'+(v>0?'<th>'+gbp(r.vat)+'</th><th>'+gbp(r.gross)+'</th>':'')+'</tr></table></div>';tbl.innerHTML=h;}
+['pr','dp','ns','fp','vr'].forEach(function(i){document.getElementById(i).addEventListener('input',go)});go();})();
+if(typeof module!=='undefined')module.exports={stages:stages};
+</script></main>
+<footer><div class="wrap"><p>Wrensum. Spreadsheet tools for UK sole traders and small firms.</p>
+<p>Wrensum is a trading name of Adam Turner, sole trader, 138 Eden Vale Road, Westbury, Wiltshire, BA13 3QF. hello@wrensum.com</p>
+<p><a href="../terms.html">Refunds and terms</a></p>
+<p>These tools are built with AI and each one is tested with worked figures before release. They are planning and record-keeping aids, not accounting, legal or tax advice.</p></div></footer>
+</body></html>

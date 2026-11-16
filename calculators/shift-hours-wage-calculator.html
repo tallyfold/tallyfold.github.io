@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en-GB"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shift Hours and Wage Cost Calculator (with Breaks and Night Shifts) | Wrensum</title>
+<meta name="description" content="Free shift hours calculator. Enter start time, end time, unpaid break and hourly rate to get paid hours and wage cost per shift, per week and per year. Handles shifts past midnight.">
+<link rel="canonical" href="https://wrensum.com/calculators/shift-hours-wage-calculator.html">
+<link rel="stylesheet" href="../styles.css"></head><body>
+<header class="site"><div class="wrap"><a class="brand" href="../index.html">Wrensum</a>
+<nav><a href="../index.html#tools">Tools</a><a href="../index.html#free">Free calculators</a></nav></div></header>
+<main class="wrap"><section class="hero"><h1>Shift hours and wage cost calculator</h1>
+<p class="lead">Enter when a shift starts and ends, the unpaid break and the hourly rate. See the paid hours and what the shift costs, for one shift, a week and a year.</p></section>
+<div class="panel">
+<label for="st">Shift starts</label><input id="st" type="time" value="09:00">
+<label for="en">Shift ends</label><input id="en" type="time" value="17:30">
+<label for="br">Unpaid break (minutes)</label><input id="br" type="number" min="0" step="5" value="30" inputmode="numeric">
+<label for="rt">Hourly rate (£)</label><input id="rt" type="number" min="0" step="0.05" value="13.50" inputmode="decimal">
+<label for="pw">Shifts like this each week</label><input id="pw" type="number" min="0" step="1" value="5" inputmode="numeric">
+<p class="small" style="margin-top:18px">Paid hours for the shift</p><p class="result" id="res">8.00 hours</p><p class="small" id="how"></p></div>
+<h2>How it is worked out</h2>
+<ol><li>Shift length is the end time minus the start time. 09:00 to 17:30 is 8 hours 30 minutes.</li>
+<li>The unpaid break comes off. 8 hours 30 minutes less 30 minutes is 8 paid hours.</li>
+<li>Wage cost is paid hours times the hourly rate. 8 hours at £13.50 is £108.00.</li></ol>
+<h2>Shifts that run past midnight</h2>
+<p>If the end time is earlier in the day than the start time, the shift is treated as finishing the next day. 22:00 to 06:00 is 8 hours, not minus 16. A shift that starts and ends at the same time counts as zero hours, so enter a 24-hour shift as two shifts.</p>
+<h2>What the cost leaves out</h2>
+<p>The figure is hours times hourly rate and nothing else. It does not include employer National Insurance, pension contributions or holiday pay, which add to what a member of staff really costs you. Whether a break is paid or unpaid depends on the contract: enter 0 if the break is paid.</p>
+<h2>Plan the whole week</h2>
+<p>The <a href="../tools/staff-rota-planner.html">Staff Rota Planner</a> does the same sum for up to 15 staff across seven days. It shows hours and wage cost per person and per day, and who is planned over their contracted hours.</p>
+<p class="small">This calculator is a planning guide, not payroll or employment advice.</p>
+<script>
+function mins(t){var m=/^(\d{1,2}):(\d{2})$/.exec(t||'');if(!m)return null;var h=+m[1],n=+m[2];if(h>23||n>59)return null;return h*60+n;}
+function shift(start,end,brk,rate,perWeek){var s=mins(start),e=mins(end);if(s===null||e===null)return{error:'time'};
+var len=((e-s)%1440+1440)%1440;if(brk>len)return{error:'break',length:len};
+var hours=Math.round((len-brk)/60*100)/100,cost=hours*rate;return{length:len,hours:hours,cost:cost,week:cost*perWeek,weekHours:hours*perWeek,year:cost*perWeek*52,overnight:e<s};}
+(function(){if(typeof document==='undefined')return;
+function n(id){var v=parseFloat(document.getElementById(id).value);return isFinite(v)&&v>0?v:0}
+function gbp(x){return '\u00a3'+x.toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function hm(m){return Math.floor(m/60)+' h '+(m%60<10?'0':'')+(m%60)+' min'}
+function go(){var r=shift(document.getElementById('st').value,document.getElementById('en').value,n('br'),n('rt'),n('pw')),res=document.getElementById('res'),how=document.getElementById('how');
+if(r.error==='time'){res.textContent='Enter both times';how.textContent='';return;}
+if(r.error==='break'){res.textContent='Break is longer than the shift';how.textContent='The shift is '+hm(r.length)+' long.';return;}
+res.textContent=r.hours.toFixed(2)+' hours';
+how.textContent='Shift length '+hm(r.length)+(r.overnight?', finishing the next day':'')+'. Cost of the shift '+gbp(r.cost)+'. Each week: '+r.weekHours.toFixed(2)+' hours, '+gbp(r.week)+'. Over 52 weeks: '+gbp(r.year)+'.';}
+['st','en','br','rt','pw'].forEach(function(i){document.getElementById(i).addEventListener('input',go)});go();})();
+if(typeof module!=='undefined')module.exports={shift:shift,mins:mins};
+</script></main>
+<footer><div class="wrap"><p>Wrensum. Spreadsheet tools for UK sole traders and small firms.</p>
+<p>Wrensum is a trading name of Adam Turner, sole trader, 138 Eden Vale Road, Westbury, Wiltshire, BA13 3QF. hello@wrensum.com</p>
+<p><a href="../terms.html">Refunds and terms</a></p>
+<p>These tools are built with AI and each one is tested with worked figures before release. They are planning and record-keeping aids, not accounting, legal or tax advice.</p></div></footer>
+</body></html>
