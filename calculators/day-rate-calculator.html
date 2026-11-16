@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en-GB"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Day Rate Calculator for the Self-Employed (UK): What to Charge per Day | Wrensum</title>
+<meta name="description" content="Free day rate calculator for UK sole traders and freelancers. Enter the income you want, your business costs, time off and billable days to get the day rate and hourly rate to charge.">
+<link rel="canonical" href="https://wrensum.com/calculators/day-rate-calculator.html">
+<link rel="stylesheet" href="../styles.css"></head><body>
+<header class="site"><div class="wrap"><a class="brand" href="../index.html">Wrensum</a>
+<nav><a href="../index.html#tools">Tools</a><a href="../index.html#free">Free calculators</a></nav></div></header>
+<main class="wrap"><section class="hero"><h1>Day rate calculator</h1>
+<p class="lead">Work out the day rate and hourly rate to charge when you work for yourself. Start from the income you want, add what the business costs to run, and divide by the days you can actually bill.</p></section>
+<div class="panel">
+<label for="inc">Income you want from the business each year, before tax (£)</label><input id="inc" type="number" min="0" step="1000" value="40000" inputmode="decimal">
+<label for="cst">Business costs each year (£)</label><input id="cst" type="number" min="0" step="500" value="6000" inputmode="decimal">
+<label for="dw">Days you work each week</label><input id="dw" type="number" min="0" max="7" step="0.5" value="5" inputmode="decimal">
+<label for="wo">Weeks a year you will not work: holiday, bank holidays, illness</label><input id="wo" type="number" min="0" max="52" step="1" value="6" inputmode="decimal">
+<label for="bl">Share of working days you can bill to a customer (%)</label><input id="bl" type="number" min="0" max="100" step="5" value="70" inputmode="decimal">
+<label for="hd">Hours in a billed day</label><input id="hd" type="number" min="0" max="24" step="0.5" value="7.5" inputmode="decimal">
+<p class="small" style="margin-top:18px">Day rate to charge, before VAT</p><p class="result" id="res">£285.71</p><p class="small" id="how"></p></div>
+<h2>How it is worked out</h2>
+<ol><li>What the business has to bring in is the income you want plus its costs. £40,000 plus £6,000 is £46,000.</li>
+<li>Working days are the days you work each week times the weeks you work. 5 days for 46 weeks is 230 days.</li>
+<li>Billable days are the share of those you can charge for. 70% of 230 is 161 days.</li>
+<li>Day rate is the first figure divided by the billable days. £46,000 divided by 161 is £285.71.</li>
+<li>Hourly rate is the day rate divided by the hours in a day. £285.71 divided by 7.5 is £38.10.</li></ol>
+<h2>Why you cannot bill every day</h2>
+<p>An employee is paid for every working day. When you work for yourself, only the days a customer pays for bring money in. Quoting, travelling, chasing invoices, doing the books, buying materials and waiting for the next job all take days that nobody pays for. The fewer days you can bill, the more each one has to earn.</p>
+<table><tr><th>Share of days billed</th><th>Billable days a year</th><th>Day rate needed</th></tr>
+<tr><td>100%</td><td>230</td><td>£200.00</td></tr><tr><td>80%</td><td>184</td><td>£250.00</td></tr><tr><td>70%</td><td>161</td><td>£285.71</td></tr>
+<tr><td>60%</td><td>138</td><td>£333.33</td></tr><tr><td>50%</td><td>115</td><td>£400.00</td></tr></table>
+<p class="small">The table uses the example above: £46,000 to bring in and 230 working days.</p>
+<h2>What to put in</h2>
+<table><tr><th>Box</th><th>Include</th></tr>
+<tr><td>Income you want</td><td>What you want the business to pay you in a year, before Income Tax and National Insurance. If you want to match a salary, remember a salary usually comes with paid holiday, sick pay and an employer's pension payment, and this figure does not.</td></tr>
+<tr><td>Business costs</td><td>Everything the business pays for in a year that you do not charge to a customer separately: vehicle, insurance, tools, phone, software, accountant, training, and anything you want to put by for a pension or quiet months.</td></tr>
+<tr><td>Weeks not worked</td><td>Holiday, bank holidays and an allowance for illness. Nobody pays you for these.</td></tr>
+<tr><td>Share you can bill</td><td>Look back at the last few months and count the days you charged for. If you are starting out, be cautious.</td></tr></table>
+<h2>What it leaves out</h2>
+<p>The calculator does not work out tax. The income figure is before Income Tax and National Insurance, and the rates are before VAT. It gives the rate you need to reach your figures. It does not tell you what customers in your trade and area will pay, so compare the answer with what others charge.</p>
+<h2>Turn the rate into a quote</h2>
+<p>The <a href="../tools/quote-builder.html">Quote Builder</a> holds your day rate, hourly rate and other prices in one price list and turns them into a clean, printable quote. To check that a single job makes money once materials and overhead are counted, use the <a href="markup-margin-calculator.html">markup and margin calculator</a> or the <a href="../tools/job-costing-calculator.html">Job Costing Calculator</a>.</p>
+<p class="small">This calculator is a pricing guide, not tax or accounting advice.</p>
+<script>
+function dayRate(income,costs,daysPerWeek,weeksOff,billPct,hoursPerDay){
+if(daysPerWeek>7||weeksOff>52||billPct>100||hoursPerDay>24)return{error:'range'};
+var workDays=daysPerWeek*(52-weeksOff),billable=workDays*billPct/100,need=income+costs;
+if(!(billable>0))return{error:'nodays',workDays:workDays};
+var day=need/billable;return{need:need,workDays:workDays,billable:billable,day:day,hour:hoursPerDay>0?day/hoursPerDay:null};}
+(function(){if(typeof document==='undefined')return;
+function n(id){var v=parseFloat(document.getElementById(id).value);return isFinite(v)&&v>0?v:0}
+function gbp(x){return '\u00a3'+x.toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function num(x){return (Math.round(x*10)/10).toLocaleString('en-GB')}
+function go(){var r=dayRate(n('inc'),n('cst'),n('dw'),n('wo'),n('bl'),n('hd')),res=document.getElementById('res'),how=document.getElementById('how');
+if(r.error==='range'){res.textContent='Check the figures';how.textContent='Use at most 7 days a week, 52 weeks off, 100% billable and 24 hours a day.';return;}
+if(r.error==='nodays'){res.textContent='No billable days';how.textContent='With these figures there are no days to charge for. Raise the days worked or the share you can bill.';return;}
+res.textContent=gbp(r.day);
+how.textContent=(r.hour===null?'':'Hourly rate '+gbp(r.hour)+'. ')+'The business needs to bring in '+gbp(r.need)+' a year. You work '+num(r.workDays)+' days and can bill '+num(r.billable)+' of them.';}
+['inc','cst','dw','wo','bl','hd'].forEach(function(i){document.getElementById(i).addEventListener('input',go)});go();})();
+if(typeof module!=='undefined')module.exports={dayRate:dayRate};
+</script></main>
+<footer><div class="wrap"><p>Wrensum. Spreadsheet tools for UK sole traders and small firms.</p>
+<p>Wrensum is a trading name of Adam Turner, sole trader, 138 Eden Vale Road, Westbury, Wiltshire, BA13 3QF. hello@wrensum.com</p>
+<p><a href="../terms.html">Refunds and terms</a></p>
+<p>These tools are built with AI and each one is tested with worked figures before release. They are planning and record-keeping aids, not accounting, legal or tax advice.</p></div></footer>
+</body></html>
