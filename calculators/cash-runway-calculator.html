@@ -25,6 +25,7 @@
 <h2>Where a single figure falls short</h2>
 <p>This calculator treats every month as the same. Real months are not: a quiet January, an annual insurance payment or a tax bill can take the balance below zero months before the average says it will. A month-by-month forecast shows that.</p>
 <p>The <a href="../tools/cash-flow-forecast.html">12-Month Cash Flow Forecast</a> lets you enter each month separately, shows the closing balance for every month and marks any month that ends below zero.</p>
+<p>To try the layout first, download the <a href="../tools/free-cash-flow-forecast-template.html">free 3-month cash flow forecast template</a>.</p>
 <p class="small">This calculator is a planning guide, not financial advice.</p>
 <script>
 function runway(cash,inc,out){var net=inc-out;if(cash<=0&&net<0)return{state:'empty',net:net};if(net>=0)return{state:'ok',net:net};var m=cash/(-net);return{state:'falling',net:net,months:m};}
