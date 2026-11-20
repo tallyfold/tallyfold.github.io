@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en-GB"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reseller Spreadsheet UK: Stock and Profit After Fees for Vinted and eBay (Excel) | Wrensum</title>
+<meta name="description" content="Excel stock and profit tracker for UK resellers on Vinted, eBay and Depop: cost, sold price, platform fees, postage and the profit each item actually made. No tax figures. Not tax advice.">
+<link rel="canonical" href="https://wrensum.com/tools/reseller-tracker.html">
+<link rel="stylesheet" href="../styles.css"></head><body>
+<header class="site"><div class="wrap"><a class="brand" href="../index.html">Wrensum</a>
+<nav><a href="../index.html#tools">Tools</a><a href="../index.html#free">Free calculators</a></nav></div></header>
+<main class="wrap"><section class="hero"><h1>Reseller's Stock and Profit Tracker</h1>
+<p class="lead">Log what you buy, mark it sold, and see what you actually made once the platform fee, the postage and the packaging are out. Stock you are still holding is counted at cost and kept well away from profit, so a full cupboard never looks like money you have made.</p>{buy(_rs, "../")}
+<p class="small">One-off payment. One Excel file (.xlsx), delivered as a download. A stock and profit record: it is not tax, legal or accounting advice, and it has no link with any marketplace.</p></section>
+<figure class="shot"><img src="../img/reseller-tracker.png" width="895" height="826" loading="lazy" alt="Screenshot of the Stock and Profit Dashboard of the Reseller&#x27;s Stock and Profit Tracker with example items"><figcaption>The Dashboard: money in, profit after fees and postage, margin against your target, and which place pays best. Example figures only. Example figures only.</figcaption></figure>
+<div class="panel"><h2 style="margin-top:0">What you get</h2><ul class="ticks">
+<li>Room for 200 items, with fifteen filled in as examples so you can see how it works before you clear them</li>
+<li>One row per item: what it is, your own reference, the category, where you bought it, the date and what it cost</li>
+<li>An extra costs box for what you spend on the item after buying it: a clean, a repair, a part, the postage to get it to you</li>
+<li>A status for every item, from In stock through Listed to Sold, Returned, Donated or Kept</li>
+<li>Your own list of up to 10 places you sell, each with its selling fee, its fixed fee and whether it takes a cut of the postage too</li>
+<li>The fee for every sale worked out from that list, so you never have to do the sum</li>
+<li>Money in, costs out, profit and margin for each item, and the days it took to sell</li>
+<li>A summary by month and by place, so you can see which platform actually pays you best after its fees</li>
+<li>A count of stock that has sat unsold longer than you are happy with, at a number of days you choose</li>
+<li>A dashboard, in light and dark, that says in plain English what you made and warns when something sold at a loss</li>
+<li>A sheet of 23 checks that looks for common slips: a fee typed as 12.9 instead of 12.9%, a price typed as text, a sale with no date, an item sold before you bought it</li></ul></div>
+<h2>Who it is for</h2><p>People in the UK reselling second-hand or bought-to-resell items on Vinted, eBay, Depop, Facebook Marketplace or at car boots, who want to know what they are really making rather than what landed in the account. You need Microsoft Excel.</p>
+<h2>How to use it</h2><ol>
+<li>In Settings, put in what a parcel's packaging costs you and the margin you are aiming for.</li>
+<li>On Platforms, set the fee for each place you sell. Examples are filled in: check every one against what you are charged today, because platforms change their fees.</li>
+<li>Log each item as you buy it, with its cost and the date, and set Status to In stock.</li>
+<li>When it sells, fill in the date, the place, the price and both postage figures, and change Status to Sold. Everything else works itself out.</li></ol>
+<figure class="shot"><img src="../img/reseller-tracker-stock.png" width="1888" height="723" loading="lazy" alt="Screenshot of the Stock sheet showing items bought, where they came from, the date and the cost"><figcaption>The buying side of the Stock sheet. You type the white boxes; the total cost works itself out. Example figures only.</figcaption></figure>
+<figure class="shot"><img src="../img/reseller-tracker-sold.png" width="1879" height="603" loading="lazy" alt="Screenshot of the Stock sheet showing each sale with its fee, money in, costs out, profit, margin and days to sell"><figcaption>The selling side. Fee, money in, costs out, profit, margin and days to sell, item by item. The returned row earns nothing, which is the honest picture. Example figures only.</figcaption></figure>
+<figure class="shot"><img src="../img/reseller-tracker-summary.png" width="1226" height="418" loading="lazy" alt="Screenshot of the Summary sheet with totals, a month-by-month table and a table by place sold"><figcaption>The Summary: totals, a month-by-month table, and what each place made you after its fees. Example figures only.</figcaption></figure>
+<figure class="shot"><img src="../img/reseller-tracker-platforms.png" width="907" height="364" loading="lazy" alt="Screenshot of the Platforms sheet with example selling fees for several marketplaces"><figcaption>Your own list of places and fees. Every figure shown is an example to type over, not a quoted rate. Example figures only.</figcaption></figure>
+<h2>Questions</h2><dl>
+<dt>Does it tell me whether I have to declare this to HMRC?</dt><dd>No, and it holds no tax figures or thresholds at all. That is deliberate: whether this income has to be declared depends on your own circumstances, and a number printed in a spreadsheet is no substitute for checking. See GOV.UK or ask an accountant.</dd>
+<dt>Are the fees in it correct?</dt><dd>They are examples, and they were not checked against any platform on the day the file was built. Platforms change their fees, so the file asks you to put in what you are actually charged. That is why the fees sit on their own sheet where you can edit them.</dd>
+<dt>Is this made by, or connected to, Vinted or eBay?</dt><dd>No. Wrensum has no link with any marketplace. The names are there as example rows because they are the places people sell, and you can rename or delete every one of them.</dd>
+<dt>What if I sell somewhere that is not on the list?</dt><dd>Add it to the Platforms sheet with its fee, and pick it from the drop-down. Until you do, the sale has no fee, so it is not counted at all rather than counted wrongly, and the Checks sheet tells you which sale is waiting. A profit figure that is quietly too high is worse than one that says it is not ready.</dd>
+<dt>Does stock I have not sold count as profit?</dt><dd>No. Items still In stock or Listed are counted at what they cost you and shown separately. Nothing becomes profit until it is marked Sold.</dd>
+<dt>What about something that came back?</dt><dd>Mark it Returned. It keeps the cost and earns nothing, which is what actually happened. Donated and Kept work the same way.</dd>
+<dt>Can it work out postage for me?</dt><dd>No. You type what the buyer paid and what you paid, because that depends on the size, the courier and the day. Keeping them apart is the point: on some platforms the buyer's postage is also charged a fee.</dd>
+<dt>What do I need to open it?</dt><dd>Microsoft Excel. The file has also been tested in LibreOffice Calc. It contains no macros.</dd>
+<dt>Are the items in it real?</dt><dd>No. Every item, price and date in the file is invented, to show the format. Type over them with your own.</dd>
+<dt>How was it made?</dt><dd>It was built with the help of AI, like everything on this site, and then checked: it recalculates with no errors, it has 23 checks of its own, and an independent set of tests works out every figure a second way before release.</dd></dl>
+<h2>Free to use first</h2><p>The <a href="../calculators/markup-margin-calculator.html">markup and margin calculator</a> shows what to charge to hit a margin, and the <a href="../calculators/cash-runway-calculator.html">cash runway calculator</a> shows how long money in the bank will last.</p>
+<h2>Other tools</h2><p>If you want a full set of books rather than a stock list, the <a href="sole-trader-bookkeeping.html">Sole Trader Bookkeeping Workbook</a> (£{BOOKS[0]["price"]}) records a year of income and expenses under the box numbers of HMRC's short self-employment pages.</p></main>
+<footer><div class="wrap"><p>Wrensum. Spreadsheet tools for UK sole traders and small firms.</p>
+<p>Wrensum is a trading name of Adam Turner, sole trader, 138 Eden Vale Road, Westbury, Wiltshire, BA13 3QF. hello@wrensum.com</p>
+<p><a href="../terms.html">Refunds and terms</a></p>
+<p>These tools are built with AI and each one is tested with worked figures before release. They are planning and record-keeping aids, not accounting, legal or tax advice.</p></div></footer>
+</body></html>
