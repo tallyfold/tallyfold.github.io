@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en-GB"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Break-Even Calculator: How Many Sales Do You Need to Cover Your Costs? | Wrensum</title>
+<meta name="description" content="Free break-even calculator for small businesses. Enter your monthly fixed costs, your price and the cost of one sale to see how many sales you need to break even or to make the profit you want.">
+<link rel="canonical" href="https://wrensum.com/calculators/break-even-calculator.html">
+<link rel="stylesheet" href="../styles.css"></head><body>
+<header class="site"><div class="wrap"><a class="brand" href="../index.html">Wrensum</a>
+<nav><a href="../index.html#tools">Tools</a><a href="../index.html#free">Free calculators</a></nav></div></header>
+<main class="wrap"><section class="hero"><h1>Break-even calculator</h1>
+<p class="lead">Work out how many sales you need each month before your business covers its costs, and how many more it takes to make the profit you want.</p></section>
+<div class="panel">
+<label for="fx">Fixed costs each month: rent, insurance, software, your own pay and anything else you pay whatever you sell (£)</label><input id="fx" type="number" min="0" step="50" value="1800" inputmode="decimal">
+<label for="pr">Price of one sale: one item, one job or one hour (£)</label><input id="pr" type="number" min="0" step="1" value="45" inputmode="decimal">
+<label for="vc">Cost of making that one sale: materials, packaging, postage, fees (£)</label><input id="vc" type="number" min="0" step="1" value="18" inputmode="decimal">
+<label for="tp">Profit you want each month, on top of covering costs (£). Leave at 0 for break-even only.</label><input id="tp" type="number" min="0" step="50" value="0" inputmode="decimal">
+<p class="small" style="margin-top:18px">Sales needed each month to break even</p><p class="result" id="res">67</p><p class="small" id="how"></p></div>
+<h2>What break-even means</h2>
+<p>Break-even is the point where the money coming in exactly covers the money going out. Below it you are paying to stay open. Above it, every extra sale adds to profit.</p>
+<p>Each sale leaves something behind after its own costs. A print that sells for £45 and costs £18 to make and send leaves £27. That £27 is called the contribution: it goes towards the fixed costs first, and only after those are covered does it become profit.</p>
+<h2>How it is worked out</h2>
+<ol><li>Contribution from one sale is the price minus the cost of that sale. £45 minus £18 is £27.</li>
+<li>Break-even sales are the fixed costs divided by the contribution, rounded up to a whole sale. £1,800 divided by £27 is 66.7, so 67 sales.</li>
+<li>Break-even takings are those sales multiplied by the price: 67 at £45 is £3,015 a month.</li>
+<li>For a profit, add the profit you want to the fixed costs before dividing. For £1,000 a month: £2,800 divided by £27 is 103.7, so 104 sales.</li></ol>
+<table><tr><th>Price of one sale</th><th>Left after its £18 cost</th><th>Sales to cover £1,800</th></tr>
+<tr><td>£30</td><td>£12</td><td>150</td></tr><tr><td>£36</td><td>£18</td><td>100</td></tr><tr><td>£45</td><td>£27</td><td>67</td></tr>
+<tr><td>£54</td><td>£36</td><td>50</td></tr><tr><td>£63</td><td>£45</td><td>40</td></tr></table>
+<p>The table shows why price matters more than it seems. Raising the price from £45 to £54 is a fifth more for the customer, but it cuts the sales you need by a quarter.</p>
+<h2>Getting the figures right</h2>
+<ul><li>Count your own pay as a fixed cost. A business that only breaks even without paying you is not breaking even.</li>
+<li>If you sell many different things, use an average sale: a typical order value and the typical cost of filling it.</li>
+<li>If you sell time, one sale is one hour or one day, and its cost is whatever that hour costs you in travel, materials or fees.</li>
+<li>Put yearly bills in as a monthly share. An insurance bill of £360 a year is £30 a month.</li></ul>
+<h2>From a single answer to the whole year</h2>
+<p>This calculator assumes every month is the same. The <a href="../tools/cash-flow-forecast.html">12-Month Cash Flow Forecast</a> lets each month differ, so you can see the quiet months before they arrive. To see what actually happened, the <a href="../tools/small-business-bookkeeping.html">Small Business Bookkeeping Workbook</a> logs real income and expenses and shows the profit month by month; for UK sole traders there is a <a href="../tools/sole-trader-bookkeeping.html">version laid out for the tax return</a>.</p>
+<p class="small">Built with AI and tested with the worked figures on this page. A planning guide, not accounting advice. Figures are before any VAT or sales tax. Last checked 22 November 2026.</p>
+<script>
+function breakEven(fixed,price,cost,target){var c=price-cost;if(!(c>0))return null;var u=Math.ceil((fixed/c)-1e-9),t=Math.ceil(((fixed+target)/c)-1e-9);return{contribution:c,ratio:price>0?c/price:0,units:u,takings:u*price,targetUnits:t,targetTakings:t*price};}
+(function(){if(typeof document==='undefined')return;
+function n(id){var v=parseFloat(document.getElementById(id).value);return isFinite(v)&&v>0?v:0}
+function gbp(x){return '\u00a3'+x.toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function num(x){return x.toLocaleString('en-GB')}
+function go(){var fx=n('fx'),pr=n('pr'),vc=n('vc'),tp=n('tp'),r=breakEven(fx,pr,vc,tp),res=document.getElementById('res'),how=document.getElementById('how');
+if(!r){res.textContent='No break-even point';how.textContent='Each sale costs as much as it brings in, or more, so no number of sales will cover the fixed costs. Raise the price or cut the cost of a sale.';return;}
+res.textContent=num(r.units);
+var t='Each sale leaves '+gbp(r.contribution)+' after its own cost ('+Math.round(r.ratio*100)+'% of the price). '+num(r.units)+(r.units===1?' sale brings':' sales bring')+' in '+gbp(r.takings)+' a month.';
+if(tp>0)t+=' For a profit of '+gbp(tp)+' a month you need '+num(r.targetUnits)+(r.targetUnits===1?' sale':' sales')+', which is '+gbp(r.targetTakings)+' in takings.';
+how.textContent=t;}
+['fx','pr','vc','tp'].forEach(function(i){document.getElementById(i).addEventListener('input',go)});go();})();
+if(typeof module!=='undefined')module.exports={breakEven:breakEven};
+</script></main>
+<footer><div class="wrap"><p>Wrensum. Spreadsheet tools for UK sole traders and small firms.</p>
+<p>Wrensum is a trading name of Adam Turner, sole trader, 138 Eden Vale Road, Westbury, Wiltshire, BA13 3QF. hello@wrensum.com</p>
+<p><a href="../terms.html">Refunds and terms</a></p>
+<p>These tools are built with AI and each one is tested with worked figures before release. They are planning and record-keeping aids, not accounting, legal or tax advice.</p></div></footer>
+</body></html>
