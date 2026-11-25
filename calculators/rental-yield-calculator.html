@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en-GB"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rental Yield Calculator: Gross and Net Yield on a UK Rental Property | Wrensum</title>
+<meta name="description" content="Free rental yield calculator for UK landlords. Enter the property value, the rent and the running costs to see the gross yield, the net yield after costs and empty weeks, and what is left each month before mortgage and tax.">
+<link rel="canonical" href="https://wrensum.com/calculators/rental-yield-calculator.html">
+<link rel="stylesheet" href="../styles.css"></head><body>
+<header class="site"><div class="wrap"><a class="brand" href="../index.html">Wrensum</a>
+<nav><a href="../index.html#tools">Tools</a><a href="../index.html#free">Free calculators</a></nav></div></header>
+<main class="wrap"><section class="hero"><h1>Rental yield calculator</h1>
+<p class="lead">Work out the gross and net yield on a rental property, and what the rent leaves each month once the running costs are paid.</p></section>
+<div class="panel">
+<label for="pp">What the property cost, or what it is worth now (&pound;)</label><input id="pp" type="number" min="0" step="1000" value="185000" inputmode="decimal">
+<label for="bc">Buying costs you want to count: legal fees, survey, stamp duty, work done before letting (&pound;). Leave at 0 to ignore them.</label><input id="bc" type="number" min="0" step="500" value="0" inputmode="decimal">
+<label for="rm">Rent you receive each month (&pound;)</label><input id="rm" type="number" min="0" step="25" value="875" inputmode="decimal">
+<label for="cm">Running costs each month: insurance, agent fees, service charge, ground rent, repairs set aside (&pound;)</label><input id="cm" type="number" min="0" step="10" value="165" inputmode="decimal">
+<label for="vw">Weeks a year you expect it to be empty</label><input id="vw" type="number" min="0" max="52" step="1" value="2" inputmode="decimal">
+<p class="small" style="margin-top:18px">Gross yield</p><p class="result" id="res">5.7%</p><p class="small" id="how"></p></div>
+<h2>What yield means</h2>
+<p>Yield is the yearly rent set against what the property is worth, written as a percentage. It is the figure that lets you compare one property with another, or with leaving the money somewhere else. On its own it says nothing about whether a property is a good buy: it ignores what happens to the price, and it ignores your own tax.</p>
+<p><strong>Gross yield</strong> is the yearly rent divided by the value. It is the headline figure in most adverts, and it flatters, because no property earns rent with nothing going out.</p>
+<p><strong>Net yield</strong> takes the running costs off the rent first, and allows for the weeks the property sits empty between tenants. It is the more honest number, and it is usually one to two percentage points lower.</p>
+<h2>How it is worked out</h2>
+<ol><li>Yearly rent is the monthly rent times twelve. &pound;875 a month is &pound;10,500.</li>
+<li>Empty weeks come off that. Two weeks at &pound;875 a month is about &pound;404, leaving &pound;10,096.</li>
+<li>Running costs come off too. &pound;165 a month is &pound;1,980 a year, leaving &pound;8,116.</li>
+<li>Gross yield is the full yearly rent divided by the value: &pound;10,500 divided by &pound;185,000 is 5.7%.</li>
+<li>Net yield is what is left divided by the value: &pound;8,116 divided by &pound;185,000 is 4.4%.</li></ol>
+<table><tr><th>Monthly rent</th><th>Yearly rent</th><th>Gross yield on &pound;185,000</th></tr>
+<tr><td>&pound;700</td><td>&pound;8,400</td><td>4.5%</td></tr><tr><td>&pound;800</td><td>&pound;9,600</td><td>5.2%</td></tr><tr><td>&pound;875</td><td>&pound;10,500</td><td>5.7%</td></tr>
+<tr><td>&pound;950</td><td>&pound;11,400</td><td>6.2%</td></tr><tr><td>&pound;1,100</td><td>&pound;13,200</td><td>7.1%</td></tr></table>
+<h2>What is not in these figures</h2>
+<ul><li><strong>Mortgage payments.</strong> Neither yield includes them. Yield measures the property, not how you paid for it.</li>
+<li><strong>Tax.</strong> The figures here are before any tax of any kind. What you owe depends on your own circumstances: see GOV.UK or an accountant.</li>
+<li><strong>What the property does in price.</strong> A low yield in an area where prices rise can beat a high yield where they do not. Yield says nothing either way.</li>
+<li><strong>The big occasional costs.</strong> A boiler, a roof or a void of several months will not show up in a monthly running-cost figure. Set money aside for them and put that figure in the running costs.</li></ul>
+<h2>Keeping the real figures</h2>
+<p>A yield is a forecast. What it actually did is a different question, and it is the one the tax return asks. The <a href="../tools/landlord-rental-tracker.html">Landlord Rental Income and Expense Tracker</a> logs the rent and the costs for each property over a tax year and adds them up under the box numbers printed on HMRC's UK property pages.</p>
+<p class="small">Built with AI and tested with the worked figures on this page. A planning guide, not tax, legal or accounting advice. Last checked 25 November 2026.</p>
+<script>
+function rentalYield(value,buyCosts,rentMonth,costMonth,voidWeeks){var base=value+buyCosts;if(!(base>0))return null;
+var yearly=rentMonth*12,lost=rentMonth*12*(Math.min(Math.max(voidWeeks,0),52)/52),received=yearly-lost,net=received-costMonth*12;
+return{base:base,yearly:yearly,lost:lost,received:received,net:net,gross:yearly/base,netYield:net/base,monthly:net/12};}
+(function(){if(typeof document==='undefined')return;
+function n(id){var v=parseFloat(document.getElementById(id).value);return isFinite(v)&&v>0?v:0}
+function gbp(x){return '\u00a3'+x.toLocaleString('en-GB',{minimumFractionDigits:0,maximumFractionDigits:0})}
+function pc(x){return (x*100).toFixed(1)+'%'}
+function go(){var r=rentalYield(n('pp'),n('bc'),n('rm'),n('cm'),n('vw')),res=document.getElementById('res'),how=document.getElementById('how');
+if(!r){res.textContent='Enter a value';how.textContent='Type what the property cost or is worth now.';return;}
+res.textContent=pc(r.gross);
+var t='Net yield is '+pc(r.netYield)+'. The rent brings in '+gbp(r.yearly)+' a year';
+if(r.lost>0)t+=', less '+gbp(r.lost)+' for the weeks it is empty';
+t+=', and after '+gbp(n('cm')*12)+' of running costs that leaves '+gbp(r.net)+' a year, or '+gbp(r.monthly)+' a month.';
+if(n('bc')>0)t+=' Both yields are measured against '+gbp(r.base)+', the price plus the buying costs you entered.';
+t+=' Before any mortgage payment and before tax.';
+if(r.net<0)t+=' As entered, the running costs are more than the rent received.';
+how.textContent=t;}
+['pp','bc','rm','cm','vw'].forEach(function(i){document.getElementById(i).addEventListener('input',go)});go();})();
+if(typeof module!=='undefined')module.exports={rentalYield:rentalYield};
+</script></main>
+<footer><div class="wrap"><p>Wrensum. Spreadsheet tools for UK sole traders and small firms.</p>
+<p>Wrensum is a trading name of Adam Turner, sole trader, 138 Eden Vale Road, Westbury, Wiltshire, BA13 3QF. hello@wrensum.com</p>
+<p><a href="../terms.html">Refunds and terms</a></p>
+<p>These tools are built with AI and each one is tested with worked figures before release. They are planning and record-keeping aids, not accounting, legal or tax advice.</p></div></footer>
+</body></html>
