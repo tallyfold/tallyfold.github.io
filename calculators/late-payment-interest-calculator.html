@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en-GB"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Late Payment Interest Calculator UK: Statutory Interest and Debt Recovery Costs | Wrensum</title>
+<meta name="description" content="Free UK late payment interest calculator. Work out statutory interest at 8% plus the Bank of England base rate on an unpaid business invoice, plus the fixed debt recovery sum. Not legal advice.">
+<link rel="canonical" href="https://wrensum.com/calculators/late-payment-interest-calculator.html">
+<link rel="stylesheet" href="../styles.css"></head><body>
+<header class="site"><div class="wrap"><a class="brand" href="../index.html">Wrensum</a>
+<nav><a href="../index.html#tools">Tools</a><a href="../index.html#free">Free calculators</a></nav></div></header>
+<main class="wrap"><section class="hero"><h1>Late payment interest calculator</h1>
+<p class="lead">Another business has not paid your invoice. Work out the statutory interest and the fixed debt recovery sum you are allowed to charge, using the rules GOV.UK sets out.</p></section>
+<div class="panel">
+<label for="amt">Amount of the unpaid invoice (£)</label><input id="amt" type="number" min="0" step="50" value="2400" inputmode="decimal">
+<label for="base">Bank of England base rate today (%). GOV.UK does not publish this figure, so look it up on the <a href="https://www.bankofengland.co.uk/boeapps/iadb/Repo.asp" rel="nofollow">Bank of England's own page</a> and type it in.</label><input id="base" type="number" min="0" step="0.05" value="4" inputmode="decimal">
+<label for="days">Days the payment is late</label><input id="days" type="number" min="0" step="1" value="30" inputmode="decimal">
+<p class="small" style="margin-top:18px">Interest and debt recovery costs you could add</p><p class="result" id="res">&pound;0.00</p><p class="small" id="how"></p></div>
+<h2>What you are allowed to charge</h2>
+<p>GOV.UK says: &ldquo;The interest you can charge if another business is late paying for goods or a service is &lsquo;statutory interest&rsquo; - this is 8% plus the Bank of England base rate for business to business transactions.&rdquo; It also says you cannot claim statutory interest if a different rate of interest is set in a contract, and that you cannot use a lower rate in a contract with a public authority.</p>
+<p>On top of the interest you can charge a fixed sum for the cost of recovering the payment. GOV.UK sets it by the size of the debt, and says you can only charge it once for each payment:</p>
+<table><tr><th>Amount of debt</th><th>What you can charge</th></tr>
+<tr><td>Up to &pound;999.99</td><td>&pound;40</td></tr><tr><td>&pound;1,000 to &pound;9,999.99</td><td>&pound;70</td></tr><tr><td>&pound;10,000 or more</td><td>&pound;100</td></tr></table>
+<p>GOV.UK adds that a supplier &ldquo;can also claim for reasonable costs each time you try to recover the debt&rdquo;, on top of that fixed sum. It does not put a figure on those, so this calculator leaves them out.</p>
+<h2>When a payment counts as late</h2>
+<p>GOV.UK says that if you agree a payment date it &ldquo;must usually be within 30 days for public authorities or 60 days for business transactions&rdquo;, and that a longer period than 60 days can be agreed between businesses but &ldquo;must be fair to both businesses&rdquo;. Where no payment date is agreed, it says the payment is late 30 days after either the customer gets the invoice, or you deliver the goods or provide the service, whichever is later.</p>
+<h2>How the interest is worked out</h2>
+<ol><li>Add 8% to the Bank of England base rate. With a base rate of 4%, that is 12% a year.</li>
+<li>Take that percentage of the unpaid amount. 12% of &pound;2,400 is &pound;288 for a full year.</li>
+<li>Divide by 365 for the daily amount. &pound;288 divided by 365 is 78.9p a day.</li>
+<li>Multiply by the days the payment is late. Thirty days at 78.9p is &pound;23.67.</li>
+<li>Add the fixed debt recovery sum for the size of the debt. &pound;2,400 falls in the &pound;1,000 to &pound;9,999.99 band, so &pound;70, making &pound;93.67 in all.</li></ol>
+<p>The fixed sum is far larger than a month of interest on an ordinary invoice, which is worth knowing before you spend an afternoon on the arithmetic.</p>
+<h2>Before you charge it</h2>
+<ul><li>These rules are for business-to-business debts. They are not for money owed by a private customer.</li>
+<li>Check the contract or your own terms first. GOV.UK says you cannot claim statutory interest where a contract sets a different rate of interest.</li>
+<li>Charging interest is your decision, not an obligation. Many small firms send one more polite reminder first and keep the right to charge in reserve.</li>
+<li>Whatever you decide, write it down: the invoice date, the date it was due, every reminder you sent and what was said.</li></ul>
+<h2>Keeping track of what is owed</h2>
+<p>Working one invoice out by hand is fine. Knowing which of thirty invoices is overdue is not. The <a href="../tools/invoice-template.html">Invoice Template and Tracker</a> (&pound;4) prints the invoice and logs what is owed and what is overdue. Electricians running jobs rather than invoices will want the <a href="../tools/electricians-job-pack.html">Electricians Job Pack</a> (&pound;29), which tracks every job from enquiry to paid and flags what is past your terms.</p>
+<p class="small">Built with AI and tested with the worked figures on this page. The rules and the fixed sums above were read on GOV.UK on 26 November 2026: <a href="https://www.gov.uk/late-commercial-payments-interest-debt-recovery/charging-interest-commercial-debt" rel="nofollow">Interest on late commercial payments</a>, <a href="https://www.gov.uk/late-commercial-payments-interest-debt-recovery/claim-debt-recovery-costs" rel="nofollow">Claim debt recovery costs on late payments</a> and <a href="https://www.gov.uk/late-commercial-payments-interest-debt-recovery" rel="nofollow">When a payment becomes late</a>. This is information, not legal advice, and it is not a statement of what you should do about any particular debt.</p>
+<script>
+function lateInterest(amount,baseRate,days){if(!(amount>0)||!(days>0))return null;var rate=(8+baseRate)/100;var year=amount*rate;var daily=year/365;var interest=daily*days;var fixed=amount<1000?40:(amount<10000?70:100);return{rate:rate*100,year:year,daily:daily,interest:interest,fixed:fixed,total:interest+fixed};}
+(function(){if(typeof document==='undefined')return;
+function n(id){var v=parseFloat(document.getElementById(id).value);return isFinite(v)&&v>=0?v:0}
+function gbp(x){return '\u00a3'+x.toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function go(){var r=lateInterest(n('amt'),n('base'),n('days')),res=document.getElementById('res'),how=document.getElementById('how');
+if(!r){res.textContent='\u00a30.00';how.textContent='Enter an amount and the number of days the payment is late.';return;}
+res.textContent=gbp(r.total);
+how.textContent='Statutory interest at '+(Math.round(r.rate*100)/100)+'% a year is '+gbp(r.year)+' over a full year, which is '+gbp(r.daily)+' a day and '+gbp(r.interest)+' for the days late. The fixed debt recovery sum for a debt of this size is '+gbp(r.fixed)+'.';}
+['amt','base','days'].forEach(function(i){document.getElementById(i).addEventListener('input',go)});go();})();
+if(typeof module!=='undefined')module.exports={lateInterest:lateInterest};
+</script></main>
+<footer><div class="wrap"><p>Wrensum. Spreadsheet tools for UK sole traders and small firms.</p>
+<p>Wrensum is a trading name of Adam Turner, sole trader, 138 Eden Vale Road, Westbury, Wiltshire, BA13 3QF. hello@wrensum.com</p>
+<p><a href="../terms.html">Refunds and terms</a></p>
+<p>These tools are built with AI and each one is tested with worked figures before release. They are planning and record-keeping aids, not accounting, legal or tax advice.</p></div></footer>
+</body></html>
