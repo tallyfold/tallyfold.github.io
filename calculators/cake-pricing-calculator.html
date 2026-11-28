@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en-GB"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cake Pricing Calculator UK: How Much to Charge for a Cake | Wrensum</title>
+<meta name="description" content="Free cake pricing calculator for home bakers. Enter the ingredients, your hours, overheads and packaging to see what the cake costs to make, the price that leaves the profit you want, and the price per serving.">
+<link rel="canonical" href="https://wrensum.com/calculators/cake-pricing-calculator.html">
+<link rel="stylesheet" href="../styles.css"></head><body>
+<header class="site"><div class="wrap"><a class="brand" href="../index.html">Wrensum</a>
+<nav><a href="../index.html#tools">Tools</a><a href="../index.html#free">Free calculators</a></nav></div></header>
+<main class="wrap"><section class="hero"><h1>Cake pricing calculator</h1>
+<p class="lead">Work out what a cake costs you to make, and the price that leaves the profit you want once your time, your overheads and the box are counted.</p></section>
+<div class="panel">
+<label for="ci">Ingredients for this cake (&pound;)</label><input id="ci" type="number" min="0" step="0.5" value="9.50" inputmode="decimal">
+<label for="ch">Hours of your own work: baking, filling, decorating, washing up</label><input id="ch" type="number" min="0" step="0.25" value="2.5" inputmode="decimal">
+<label for="cr">What an hour of your time is worth (&pound;)</label><input id="cr" type="number" min="0" step="0.5" value="14" inputmode="decimal">
+<label for="co">Overheads for this cake: gas and electricity, a share of equipment and insurance (&pound;)</label><input id="co" type="number" min="0" step="0.5" value="3" inputmode="decimal">
+<label for="cb">Box, board, ribbon and any delivery (&pound;)</label><input id="cb" type="number" min="0" step="0.1" value="2.20" inputmode="decimal">
+<label for="cm">Profit you want, as a share of the price (%)</label><input id="cm" type="number" min="0" max="95" step="1" value="30" inputmode="decimal">
+<label for="cs">Servings, if you want a price for each. Leave at 0 to skip.</label><input id="cs" type="number" min="0" step="1" value="16" inputmode="decimal">
+<p class="small" style="margin-top:18px">Price for the cake</p><p class="result" id="res">&pound;71.00</p><p class="small" id="how"></p></div>
+<h2>What goes into the price of a cake</h2>
+<p>Most home bakers start from the ingredients and double them. That leaves out the largest cost, which is nearly always time. A cake with &pound;9.50 of ingredients and two and a half hours of work has cost &pound;44.50 before the oven is switched on, if an hour of your time is worth &pound;14.</p>
+<ol><li><strong>Ingredients.</strong> What went into this cake, not what the whole bag cost. 300 g from a 1.5 kg bag of flour at &pound;1.10 is 22p.</li>
+<li><strong>Your time.</strong> The hours you were working on it, at a rate you would accept from an employer. Time in the oven does not count unless you could do nothing else.</li>
+<li><strong>Overheads.</strong> Energy, tins and tools that wear out, insurance, registration costs, a website. Add up a month of these and divide by the number of cakes you make in a month.</li>
+<li><strong>Packaging.</strong> The box, the board, dowels, ribbon, and the fuel if you deliver.</li>
+<li><strong>Profit.</strong> What is left for the business after you have been paid for your time: money for a slow month, a new mixer, a cake that has to be made twice.</li></ol>
+<h2>The worked example</h2>
+<p>&pound;9.50 of ingredients, 2.5 hours at &pound;14 (&pound;35.00), &pound;3.00 of overheads and &pound;2.20 of packaging come to a cost of &pound;49.70. To keep 30% of the price as profit, divide the cost by 0.70: the price is &pound;71.00, of which &pound;21.30 is profit. Cut into 16, that is &pound;4.44 a serving.</p>
+<table><tr><th>Profit as a share of the price</th><th>Price on a cost of &pound;49.70</th><th>Profit</th></tr>
+<tr><td>25%</td><td>&pound;66.27</td><td>&pound;16.57</td></tr><tr><td>30%</td><td>&pound;71.00</td><td>&pound;21.30</td></tr>
+<tr><td>40%</td><td>&pound;82.83</td><td>&pound;33.13</td></tr><tr><td>50%</td><td>&pound;99.40</td><td>&pound;49.70</td></tr></table>
+<h2>Margin is not markup</h2>
+<p>This calculator asks for profit as a share of the <em>price</em>, which is a margin. Adding 30% to the cost is a markup, and it gives a lower price: &pound;64.61 here, not &pound;71.00. The <a href="markup-margin-calculator.html">markup and margin calculator</a> turns one into the other.</p>
+<h2>What the answer is, and is not</h2>
+<p>It is the price below which this cake does not pay you what you asked for. It is not a forecast of what customers will pay. If the figure is well above what cakes like yours sell for locally, the usual causes are hours that could be shortened, or a rate set for decorating work being applied to simple bakes. If it is well below, you have room.</p>
+<h2>Pricing a whole menu</h2>
+<p>One cake is quick to work out by hand. A counter of bakes, each with a dozen ingredients bought in different packs, is not. The <a href="../tools/recipe-costing.html">Recipe and Menu Costing Workbook</a> keeps your ingredient prices in one list, costs every recipe from it, and shows the margin on each and the price that would reach your target.</p>
+<p class="small">Built with AI and tested with the worked figures on this page. A planning guide, not tax, legal or accounting advice. It leaves VAT out: if you are VAT registered, the price here is before VAT. Last checked 28 November 2026.</p>
+<script>
+function cakePrice(ing,hours,rate,over,pack,marginPct,servings){var m=marginPct/100;if(!(m>=0&&m<1))return null;
+var labour=hours*rate,cost=ing+labour+over+pack,price=cost/(1-m);
+return{labour:labour,cost:cost,price:price,profit:price-cost,markupPrice:cost*(1+m),each:servings>0?price/servings:null};}
+(function(){if(typeof document==='undefined')return;
+function n(id){var v=parseFloat(document.getElementById(id).value);return isFinite(v)&&v>0?v:0}
+function gbp(x){return '\u00a3'+x.toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function go(){var r=cakePrice(n('ci'),n('ch'),n('cr'),n('co'),n('cb'),n('cm'),n('cs')),res=document.getElementById('res'),how=document.getElementById('how');
+if(!r){res.textContent='Check the profit share';how.textContent='The profit share must be under 100% of the price.';return;}
+if(!(r.cost>0)){res.textContent='Enter your costs';how.textContent='Type what the ingredients cost and how long the cake takes.';return;}
+res.textContent=gbp(r.price);
+var t='The cake costs you '+gbp(r.cost)+' to make: '+gbp(n('ci'))+' of ingredients, '+gbp(r.labour)+' for your time, '+gbp(n('co'))+' of overheads and '+gbp(n('cb'))+' of packaging.';
+if(n('cm')>0)t+=' At '+gbp(r.price)+', '+gbp(r.profit)+' is profit on top of your time.';else t+=' That is the price that pays for your time and costs with no profit on top.';
+if(r.each!==null)t+=' That is '+gbp(r.each)+' a serving.';
+how.textContent=t;}
+['ci','ch','cr','co','cb','cm','cs'].forEach(function(i){document.getElementById(i).addEventListener('input',go)});go();})();
+if(typeof module!=='undefined')module.exports={cakePrice:cakePrice};
+</script></main>
+<footer><div class="wrap"><p>Wrensum. Spreadsheet tools for UK sole traders and small firms.</p>
+<p>Wrensum is a trading name of Adam Turner, sole trader, 138 Eden Vale Road, Westbury, Wiltshire, BA13 3QF. hello@wrensum.com</p>
+<p><a href="../terms.html">Refunds and terms</a></p>
+<p>These tools are built with AI and each one is tested with worked figures before release. They are planning and record-keeping aids, not accounting, legal or tax advice.</p></div></footer>
+</body></html>
